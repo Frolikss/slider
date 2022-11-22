@@ -13,9 +13,24 @@ function createSlider(slider) {
     const prevBtn = document.querySelector('.prevButton');
     const nextBtn = document.querySelector('.nextButton');
     const dots = document.querySelectorAll('.dot');
+    const rules = document.styleSheets;
 
-    prevBtn.addEventListener('click', () => slideChanger('back'));
-    nextBtn.addEventListener('click', slideChanger);
+    prevBtn.addEventListener('click', event => {
+
+        slideChanger('back');
+    });
+
+    nextBtn.addEventListener('click', event => {
+        slideChanger();
+    });
+
+    nextBtn.addEventListener('mouseover', event => {
+        rules[0].cssRules[3].style.transform = 'translateX(200%)';
+    });
+
+    prevBtn.addEventListener('mouseover', event => {
+        rules[0].cssRules[3].style.transform = 'translateX(-200%)';
+    });
 
     function startSlider() {
         current = slider.querySelector('.current') ?? slider.firstElementChild;
@@ -78,6 +93,5 @@ function createDots() {
 
     document.body.appendChild(container);
 }
-
 
 

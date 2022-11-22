@@ -23,6 +23,7 @@ a {
 }
 
 .slide {
+  opacity: 0;
   position: absolute;
   text-align: center;
   width: 40%;
@@ -40,6 +41,8 @@ a {
   z-index: 1;
   transform: translateX(0);
   opacity: 1;
+  font-size: 2rem;
+  box-shadow: 0 0 10px #ec8080;
 }
 
 .slide.next {
@@ -49,6 +52,7 @@ a {
 }
 
 .container {
+  height: 16px;
   position: relative;
   display: flex;
   align-content: center;
