@@ -14,10 +14,18 @@ function createSlider(slider) {
     const nextBtn = document.querySelector('.nextButton');
     const dots = document.querySelectorAll('.dot');
     const rules = document.styleSheets;
+    const swipe = window.matchMedia('(max-width: 768px)');
+
+    if (swipe.matches) {
+        createSwipe();
+    }
 
     prevBtn.addEventListener('click', event => {
-
         slideChanger('back');
+    });
+
+    prevBtn.addEventListener('mouseover', event => {
+        rules[0].cssRules[3].style.transform = 'translateX(-200%)';
     });
 
     nextBtn.addEventListener('click', event => {
@@ -26,10 +34,6 @@ function createSlider(slider) {
 
     nextBtn.addEventListener('mouseover', event => {
         rules[0].cssRules[3].style.transform = 'translateX(200%)';
-    });
-
-    prevBtn.addEventListener('mouseover', event => {
-        rules[0].cssRules[3].style.transform = 'translateX(-200%)';
     });
 
     function startSlider() {
@@ -73,6 +77,46 @@ function createSlider(slider) {
         dots[slides.indexOf(current)].classList.add('active');
     }
 
+    function createSwipe() {
+        document.addEventListener('touchstart', handleTouchStart, false);
+        document.addEventListener('touchmove', handleTouchMove, false);
+
+        let xDown = null;
+        let yDown = null;
+
+        function getTouches(evt) {
+            return evt.touches;
+        }
+
+        function handleTouchStart(evt) {
+            const firstTouch = getTouches(evt)[0];
+            xDown = firstTouch.clientX;
+            yDown = firstTouch.clientY;
+        }
+
+        function handleTouchMove(evt) {
+            if ( ! xDown || ! yDown ) {
+                return;
+            }
+
+            let xUp = evt.touches[0].clientX;
+            let yUp = evt.touches[0].clientY;
+
+            let xDiff = xDown - xUp;
+            let yDiff = yDown - yUp;
+
+            if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {
+                if ( xDiff > 0 ) {
+                    slideChanger();
+                } else {
+                    slideChanger('back');
+                }
+            }
+            xDown = null;
+            yDown = null;
+        }
+    }
+
     startSlider();
     dotsChanger();
     applyClasses();
@@ -93,5 +137,6 @@ function createDots() {
 
     document.body.appendChild(container);
 }
+
 
 

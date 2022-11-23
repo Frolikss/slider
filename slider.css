@@ -3,13 +3,13 @@ body {
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
-  user-select: none;
 }
 
 a {
   cursor: pointer;
   color: #000;
   text-decoration: none;
+  z-index: 1;
 }
 
 .slider {
@@ -20,33 +20,38 @@ a {
   height: 80vh;
   margin: 0 auto;
   overflow: hidden;
+  user-select: none;
+  touch-action: pan-y;
 }
 
 .slide {
   opacity: 0;
+  visibility: hidden;
   position: absolute;
   text-align: center;
   width: 40%;
   transition: all 0.25s;
-  transform: translateX(-200%);
 }
 
 .slide.prev {
-  z-index: 1;
   transform: translateX(-100%);
+  visibility: visible;
   opacity: 0.5;
+  transition: all 0.25s;
 }
 
 .slide.current {
-  z-index: 1;
   transform: translateX(0);
   opacity: 1;
+  visibility: visible;
   font-size: 2rem;
+  transition: all 0.25s;
   box-shadow: 0 0 10px #ec8080;
 }
 
 .slide.next {
-  z-index: 1;
+  visibility: visible;
+  transition: all 0.25s;
   transform: translateX(100%);
   opacity: 0.5;
 }
@@ -58,7 +63,7 @@ a {
   align-content: center;
   justify-content: center;
   width: 100%;
-  z-index: -1;
+  margin: 0 16px;
 }
 
 .dots {
@@ -73,6 +78,22 @@ a {
 
 .active {
   color: #ec8080;
+}
+
+.grabbing {
+  cursor: grabbing;
+}
+
+@media (max-width: 768px) {
+  .prevButton, .nextButton {
+    display: none;
+  }
+  .slide {
+    width: 100%;
+  }
+  .dots {
+    gap: 8px;
+  }
 }
 
 /*# sourceMappingURL=slider.css.map */
